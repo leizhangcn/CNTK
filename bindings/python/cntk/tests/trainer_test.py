@@ -288,18 +288,19 @@ def test_not_replaced_placeholders():
         combined_args = as_block(composite=combined_block_args, block_arguments_map=arg_map, block_op_name=name)
         return combined_args
 
+
     input_dim = 2
-    import pdb; pdb.set_trace();
     x = input_variable(shape=(input_dim,))
     p1 = placeholder_variable()
-    p2 = placeholder_variable()
+    #p2 = placeholder_variable()
 
     a = abs(x)
     b = wrap_in_block(list(a.outputs) + [p1], "my_first_block")
-    b = wrap_in_block(list(b.outputs) + [p2], "my_second_block")
-    b = past_value(b.outputs[0])
+    #b = wrap_in_block(list(b.outputs) + [p2], "my_second_block")
+    #b = past_value(b.outputs[0])
 
-    model = b.replace_placeholders({p1:b.outputs[0], p2:b.outputs[0]})
+    #model = b.replace_placeholders({p1:b.outputs[0], p2:b.outputs[0]})
+    model = b.replace_placeholders({p1:b.outputs[0]})
 
     x0 = [[1, 1],[2, 2]]
     model.forward({x : x0}, model.outputs)
