@@ -295,8 +295,9 @@ def test_not_replaced_placeholders():
     p2 = placeholder_variable()
 
     a = abs(x)
-    b = wrap_in_block(list(a.outputs) + [past_value(p1).output], "my_first_block")
-    b = wrap_in_block(list(b.outputs) + [past_value(p2).output], "my_second_block")
+    b = wrap_in_block(list(a.outputs) + [p1], "my_first_block")
+    b = wrap_in_block(list(b.outputs) + [p2], "my_second_block")
+    b = past_value(b.outputs[0])
 
     model = b.replace_placeholders({p1:b.outputs[0], p2:b.outputs[0]})
 
